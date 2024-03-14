@@ -81,11 +81,30 @@ export async function migrate<T>(db: Kysely<T>, schemaName: string) {
     .execute();
 
   await schema
+    .createTable("cover_policies")
+    .addColumn("id", "text")
+    .addColumn("creation_date",BIGINT_TYPE)
+    .addColumn("block_number", BIGINT_TYPE)
+    .addColumn("owner", ADDRESS_TYPE)
+    .addColumn("status", "text")
+    .addColumn("pharo_id", BIGINT_TYPE)
+    .addColumn("cover_bought", BIGINT_TYPE)
+    .addColumn("length_of_cover", BIGINT_TYPE)
+    .addColumn("premium_paid", BIGINT_TYPE)
+    .addColumn("premium", BIGINT_TYPE)
+    .addColumn("rate_estimate", BIGINT_TYPE)
+    .addColumn("min_cover", BIGINT_TYPE)
+
+    .addPrimaryKeyConstraint("cover_policies_pkey", ["id"])
+
+    .execute();
+
+  await schema
     .createTable("user_rewards")
     .addColumn("id", "text")
     .addColumn("chainId", CHAIN_ID_TYPE)
     .addColumn("timestamp", BIGINT_TYPE)
-    .addColumn("blockNumber", BIGINT_TYPE)
+    .addColumn("block_number", BIGINT_TYPE)
     .addColumn("user", ADDRESS_TYPE)
     .addColumn("reward", BIGINT_TYPE)
 

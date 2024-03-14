@@ -1,6 +1,8 @@
 import { Insertable, Selectable, Updateable } from "kysely";
 import { Address, ChainId, TPharoState, TUserRole } from "../types.js";
 
+export type Status = "ACTIVE" | "INACTIVE" | "CLOSED";
+
 export type User = {
   address: Address;
   name: string;
@@ -14,11 +16,9 @@ export type UserTable = User & {
   updated_at: bigint;
 };
 
-export type Status = "ACTIVE" | "INACTIVE" | "CLOSED";
-
 export type CoverPolicy = {
+  id: bigint;
   creationDate: bigint;
-  policyId: bigint;
   owner: Address;
   status: Status;
   pharoId: number;
@@ -29,6 +29,10 @@ export type CoverPolicy = {
   premium: bigint;
   rateEstimate: bigint;
   minCover: bigint;
+};
+
+export type PolicyTable = CoverPolicy & {
+  blockNumber: bigint;
 };
 
 export type LiquidityProduct = {
@@ -42,6 +46,11 @@ export type LiquidityProduct = {
   coverAvailable: bigint;
   reward: bigint;
   rateEstimate: bigint;
+};
+
+export type LiquidityProductTable = LiquidityProduct & {
+  id: string;
+  blockNumber: bigint;
 };
 
 export type Obelisk = {
@@ -76,16 +85,6 @@ export type Obelisk = {
 };
 
 export type ObeliskTable = Obelisk & {
-  id: string;
-  blockNumber: bigint;
-};
-
-export type PolicyTable = CoverPolicy & {
-  id: string;
-  blockNumber: bigint;
-};
-
-export type LiquidityProductTable = LiquidityProduct & {
   id: string;
   blockNumber: bigint;
 };
@@ -235,3 +234,6 @@ export type TPartialPharo = Updateable<PharoTable>;
 export type TNewLockToken = Insertable<LockTokenTable>;
 export type TLockToken = Selectable<LockTokenTable>;
 export type TPartialLockToken = Updateable<LockTokenTable>;
+export type TPolicyTable = PolicyTable;
+export type TPartialPolicyTable = Updateable<PolicyTable>;
+export type TNewPolicyTable = Insertable<PolicyTable>;

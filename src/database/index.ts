@@ -1,9 +1,9 @@
 import {
-    CamelCasePlugin,
-    Kysely,
-    PostgresDialect,
-    ValueExpression,
-    sql,
+  CamelCasePlugin,
+  Kysely,
+  PostgresDialect,
+  ValueExpression,
+  sql,
 } from "kysely";
 import { LRUCache } from "lru-cache";
 import { Pool } from "pg";
@@ -14,19 +14,19 @@ import { ChainId } from "../types.js";
 import { DataChange } from "./changeset.js";
 import { migrate } from "./migrate.js";
 import {
-    LiquidityProductTable,
-    ObeliskTable,
-    PharoTable,
-    PolicyTable,
-    PriceTable,
-    RoleTable,
-    SignedPolicyTable,
-    SignedPositionTable,
-    TNewPolicy,
-    TransferTable,
-    UserRewardsTable,
-    UserTable,
-    WoSTable,
+  LiquidityProductTable,
+  ObeliskTable,
+  PharoTable,
+  PolicyTable,
+  PriceTable,
+  RoleTable,
+  SignedPolicyTable,
+  SignedPositionTable,
+  TNewPolicy,
+  TransferTable,
+  UserRewardsTable,
+  UserTable,
+  WoSTable,
 } from "./schema.js";
 
 export type { DataChange as Changeset };
@@ -104,7 +104,7 @@ export class Database {
 
     for (const chunk of chunks) {
       await this.applyChange({
-        type: "InsertManyDonations",
+        type: "InsertManyPolicies",
         policies: chunk,
       });
     }
@@ -185,6 +185,23 @@ export class Database {
             ...change.pharo,
           })
           .executeTakeFirst();
+        break;
+
+      case "InsertPolicy":
+        await this.#db
+          .insertInto("policies")
+          .values({
+            ...change.policy,
+          })
+          .executeTakeFirst();
+
+        // todo: update later for scaling/many policies at a time
+        // this.#policyQueue.push(change.policy);
+
+        // this.schedulePolicyQueueFlush();
+        break;
+
+      case "InsertDistribution":
         break;
 
       default:

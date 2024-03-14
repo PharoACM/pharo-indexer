@@ -25,10 +25,19 @@ import {
   TPartialWoS,
 } from "./schema.js";
 
+export type Insertable<T> = T;
+export type InsertMany<T> = T[];
+export type Selectable<T> = T;
+export type Updateable<T> = Partial<Omit<T, "id">>;
+
 export type DataChange =
   | {
-      type: "InsertPolicy";
+      type: Insertable<"InsertPolicy">;
       policy: TNewPolicy;
+    }
+  | {
+      type: InsertMany<"InsertManyPolicies">;
+      policies: TNewPolicy[];
     }
   | {
       type: "UpdatePolicy";
@@ -177,5 +186,18 @@ export type DataChange =
       type: "UpdateLockToken";
       lockTokenId: number;
       lockToken: TPartialLockToken;
+    }
+  | {
+      type: "InsertPolicy";
+      policy: TNewPolicy;
+    }
+  | {
+      type: "UpdatePolicy";
+      policyId: number;
+      policy: TPartialPolicy;
+    }
+  | {
+      type: "InsertObelisk";
+      obelisk: TNewObelisk;
     }
   | { [key: string]: any };

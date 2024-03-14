@@ -3,9 +3,7 @@ import { parseAddress } from "../address.js";
 import { Changeset } from "../database/index.js";
 import { TPharoState } from "../types.js";
 
-export async function handleEvent(
-  args
-): Promise<Changeset[]> {
+export async function handleEvent(args: any): Promise<Changeset[]> {
   // todo: implement
   console.log("handleEvent", args.event.name, args.event.params);
 
@@ -36,7 +34,7 @@ export async function handleEvent(
             from: parseAddress(transferParams.from),
             to: parseAddress(transferParams.to),
             amount: BigInt(transferParams.value),
-            transfered_at: BigInt(event.transactionHash),
+            transfered_at: BigInt(new Date().getTime()),
             block_number: BigInt(event.blockNumber),
           },
         },
@@ -118,6 +116,38 @@ export async function handleEvent(
     //       lockTokenId: 0,
     //     },
     //   ];
+
+    case "CoverPolicyInitialized":
+      console.log("CoverPolicyInitialized", args.event.params);
+
+      const coverPolicyInitializedParams = args.event.params as {
+        id: bigint;
+        pharoId: bigint;
+        coverAmount: bigint;
+        lengthOfCover: bigint;
+      };
+
+      return [
+        {
+          type: "InsertPolicy",
+          policy: {
+            id: BigInt(coverPolicyInitializedParams.id),
+            created_at: BigInt(new Date().getTime()),
+            block_number: BigInt(event.blockNumber),
+            owner: parseAddress(event.transaction.from),
+            pharo_id: BigInt(coverPolicyInitializedParams.pharoId),
+            cover_bought: BigInt(coverPolicyInitializedParams.coverAmount),
+            length_of_cover: BigInt(coverPolicyInitializedParams.lengthOfCover),
+            premium_paid: BigInt(0),
+            premium: BigInt(0),
+            rate_estimate: BigInt(0),
+            min_cover: BigInt(0),
+          },
+        },
+      ];
+
+    case "CoverDistributionRequired":
+      console.log("CoverDistributionRequired", args.event.params);
 
     default:
       break;
