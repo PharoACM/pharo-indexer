@@ -13,8 +13,7 @@ export type PriceWithDecimals = Omit<TPrice, "id"> & { tokenDecimals: number };
 
 const FETCH_NEW_PRICE_EVERY_NTH_BLOCK_PER_CHAIN: Record<number, bigint> = {
   10: 7200n,
-  42161: 7200n,
-  424: 7200n,
+  421614: 7200n,
 };
 
 const DEFAULT_FETCH_NEW_PRICE_EVERY_NTH_BLOCK = 2000n;

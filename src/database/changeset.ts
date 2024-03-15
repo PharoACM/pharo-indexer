@@ -67,6 +67,10 @@ export type DataChange =
       price: TNewPrice;
     }
   | {
+      type: "InsertManyPrices";
+      prices: TNewPrice[];
+    }
+  | {
       type: "UpdatePrice";
       price: TPartialPrice;
     }
@@ -205,9 +209,9 @@ export type DataChange =
       type: "UpdateObelisk";
       obelilskId: number;
       obelisk: TPartialObelisk;
-  }
+    }
   | {
-    type: "InsertCoverDistribution";
-    distribution: TNewDistribution;
-  }
+      type: "InsertCoverDistribution";
+      distribution: TNewDistribution;
+    }
   | { [key: string]: any };

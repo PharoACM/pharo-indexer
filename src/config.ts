@@ -44,6 +44,26 @@ export type baseLogger = Logger;
 
 const CHAINS: Chain[] = [
   {
+    id: 42161,
+    name: "arbitrum",
+    rpc: rpcUrl
+      .default("https://arb-sepolia.g.alchemy.com/v2/")
+      .parse(process.env.ARBITRUM_SEPOLIA_RPC_URL),
+    pricesFromTimestamp: Date.UTC(2023, 7, 1, 0, 0, 0),
+    tokens: [
+      {
+        code: "ETH",
+        address: "0x0000000000000000000000000000000000000000",
+        decimals: 18,
+        priceSource: {
+          chainId: 421614,
+          address: "0x0000000000000000000000000000000000000000",
+        },
+      },
+    ],
+    subscriptions: [],
+  },
+  {
     id: 421614,
     name: "arbitrum-sepolia",
     rpc: rpcUrl
@@ -100,64 +120,6 @@ const CHAINS: Chain[] = [
     ],
   },
   {
-    id: 80001,
-    name: "polygon-mumbai",
-    rpc: rpcUrl
-      .default("https://rpc-mumbai.maticvigil.com/")
-      .parse(process.env.POLYGON_MUMBAI_RPC_URL),
-    pricesFromTimestamp: Date.UTC(2023, 8, 19, 0, 0, 0),
-    tokens: [
-      {
-        code: "MATIC",
-        address: "0x0000000000000000000000000000000000000000",
-        decimals: 18,
-        priceSource: {
-          chainId: 1,
-          address: "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0",
-        },
-      },
-      {
-        code: "USDC",
-        address: "0x9999f7Fea5938fD3b1E26A12c3f2fb024e194f97",
-        decimals: 6,
-        priceSource: {
-          chainId: 1,
-          address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-        },
-      },
-    ],
-    subscriptions: [],
-  },
-  {
-    id: 137,
-    name: "polygon",
-    rpc: rpcUrl
-      .default("https://polygon-rpc.com")
-      .parse(process.env.POLYGON_RPC_URL),
-    pricesFromTimestamp: Date.UTC(2023, 8, 19, 0, 0, 0),
-    tokens: [
-      {
-        code: "MATIC",
-        address: "0x0000000000000000000000000000000000000000",
-        decimals: 18,
-        priceSource: {
-          chainId: 1,
-          address: "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0",
-        },
-      },
-      {
-        code: "USDC",
-        address: "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
-        decimals: 6,
-        priceSource: {
-          chainId: 1,
-          address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-        },
-      },
-    ],
-    subscriptions: [],
-  },
-  {
     id: 8453,
     name: "base",
     rpc: rpcUrl
@@ -210,132 +172,6 @@ const CHAINS: Chain[] = [
         priceSource: {
           chainId: 1,
           address: "0x0000000000000000000000000000000000000000",
-        },
-      },
-    ],
-    subscriptions: [],
-  },
-  {
-    id: 324,
-    name: "zksync-era-mainnet",
-    rpc: rpcUrl
-      .default("https://mainnet.era.zksync.io")
-      .parse(process.env.ZKSYNC_RPC_URL),
-    pricesFromTimestamp: Date.UTC(2023, 12, 1, 0, 0, 0),
-    tokens: [
-      {
-        code: "ETH",
-        address: "0x0000000000000000000000000000000000000000",
-        decimals: 18,
-        priceSource: {
-          chainId: 1,
-          address: "0x0000000000000000000000000000000000000000",
-        },
-      },
-      {
-        code: "USDC",
-        address: "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
-        decimals: 6,
-        priceSource: {
-          chainId: 1,
-          address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        },
-      },
-      {
-        code: "USDT",
-        address: "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
-        decimals: 6,
-        priceSource: {
-          chainId: 1,
-          address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        },
-      },
-      {
-        code: "DAI",
-        address: "0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656",
-        decimals: 18,
-        priceSource: {
-          chainId: 1,
-          address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        },
-      },
-      {
-        code: "LUSD",
-        address: "0x503234F203fC7Eb888EEC8513210612a43Cf6115",
-        decimals: 18,
-        priceSource: {
-          chainId: 1,
-          address: "0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
-        },
-      },
-    ],
-    subscriptions: [],
-  },
-  {
-    id: 280,
-    name: "zksync-era-testnet",
-    rpc: rpcUrl
-      .default("https://testnet.era.zksync.dev")
-      .parse(process.env.ZKSYNC_TESTNET_RPC_URL),
-    pricesFromTimestamp: Date.UTC(2023, 12, 1, 0, 0, 0),
-    tokens: [
-      {
-        code: "ETH",
-        address: "0x0000000000000000000000000000000000000000",
-        decimals: 18,
-        priceSource: {
-          chainId: 1,
-          address: "0x0000000000000000000000000000000000000000",
-        },
-      },
-    ],
-    subscriptions: [],
-  },
-  {
-    id: 534351,
-    name: "scroll-sepolia",
-    rpc: rpcUrl
-      .default("https://sepolia-rpc.scroll.io")
-      .parse(process.env.SCROLL_SEPOLIA_RPC_URL),
-    pricesFromTimestamp: Date.UTC(2024, 0, 1, 0, 0, 0),
-    maxGetLogsRange: 2000,
-    tokens: [
-      {
-        code: "ETH",
-        address: "0x0000000000000000000000000000000000000000",
-        decimals: 18,
-        priceSource: {
-          chainId: 1,
-          address: "0x0000000000000000000000000000000000000000",
-        },
-      },
-    ],
-    subscriptions: [],
-  },
-  {
-    id: 534352,
-    name: "scroll",
-    rpc: rpcUrl
-      .default("https://rpc.scroll.io")
-      .parse(process.env.SCROLL_RPC_URL),
-    pricesFromTimestamp: Date.UTC(2024, 0, 1, 0, 0, 0),
-    tokens: [
-      {
-        code: "ETH",
-        address: "0x0000000000000000000000000000000000000000",
-        decimals: 18,
-        priceSource: {
-          chainId: 1,
-          address: "0x0000000000000000000000000000000000000000",
-        },
-      },
-      {
-        code: "USDC",
-        address: "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
-        decimals: 6,
-        priceSource: {
-          chainId: 1,
-          address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         },
       },
     ],
