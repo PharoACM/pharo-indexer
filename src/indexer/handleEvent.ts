@@ -149,6 +149,20 @@ export async function handleEvent(args: any): Promise<Changeset[]> {
     case "CoverDistributionRequired":
       console.log("CoverDistributionRequired", args.event.params);
 
+      const coverDistributiionParams = args.event.params as {
+        blockNumber: BigInt;
+      };
+
+      return [
+        {
+          type: "InsertCoverDistribution",
+          distribution: {
+            id: BigInt(0),
+            block_number: args.event.blockNumber,
+          },
+        },
+      ];
+
     default:
       break;
   }

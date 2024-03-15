@@ -35,6 +35,14 @@ export type PolicyTable = CoverPolicy & {
   blockNumber: bigint;
 };
 
+export type Distribution = {
+  id: BigInt;
+}
+
+export type DistributionTable = Distribution & {
+  blockNumber: BigInt;
+}
+
 export type LiquidityProduct = {
   providerAddress: Address;
   maximumRisk: bigint;
@@ -234,6 +242,4 @@ export type TPartialPharo = Updateable<PharoTable>;
 export type TNewLockToken = Insertable<LockTokenTable>;
 export type TLockToken = Selectable<LockTokenTable>;
 export type TPartialLockToken = Updateable<LockTokenTable>;
-export type TPolicyTable = PolicyTable;
-export type TPartialPolicyTable = Updateable<PolicyTable>;
-export type TNewPolicyTable = Insertable<PolicyTable>;
+export type TNewDistribution = Insertable<DistributionTable>;

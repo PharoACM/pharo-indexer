@@ -1,4 +1,5 @@
 import {
+  TNewDistribution,
   TNewLiquidityProduct,
   TNewLockToken,
   TNewObelisk,
@@ -200,4 +201,13 @@ export type DataChange =
       type: "InsertObelisk";
       obelisk: TNewObelisk;
     }
+  | {
+      type: "UpdateObelisk";
+      obelilskId: number;
+      obelisk: TPartialObelisk;
+  }
+  | {
+    type: "InsertCoverDistribution";
+    distribution: TNewDistribution;
+  }
   | { [key: string]: any };

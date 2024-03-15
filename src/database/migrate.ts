@@ -83,7 +83,7 @@ export async function migrate<T>(db: Kysely<T>, schemaName: string) {
   await schema
     .createTable("cover_policies")
     .addColumn("id", "text")
-    .addColumn("creation_date",BIGINT_TYPE)
+    .addColumn("creation_date", BIGINT_TYPE)
     .addColumn("block_number", BIGINT_TYPE)
     .addColumn("owner", ADDRESS_TYPE)
     .addColumn("status", "text")
@@ -184,6 +184,17 @@ export async function migrate<T>(db: Kysely<T>, schemaName: string) {
     .addColumn("claimed", "boolean")
 
     .addPrimaryKeyConstraint("lock_tokens_pkey", ["id"])
+
+    .execute();
+
+  await schema
+    .createTable("distributions")
+    .addColumn("id", BIGINT_TYPE)
+    .addColumn("block_number", BIGINT_TYPE)
+
+    // todo: finish
+
+    .addPrimaryKeyConstraint("distributions_pkey", ["id"])
 
     .execute();
 }
