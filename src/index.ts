@@ -252,17 +252,6 @@ await main().catch((err) => {
 //   hostname: config.hostname,
 //   graphqlHandler: graphqlHandler,
 //   enableSentry: config.sentryDsn !== null,
-//   calculator: {
-//     esimatesLinearQfImplementation:
-//       config.estimatesLinearQfWorkerPoolSize === null
-//         ? {
-//             type: "in-thread",
-//           }
-//         : {
-//             type: "worker-pool",
-//             workerPoolSize: config.estimatesLinearQfWorkerPoolSize,
-//           },
-//   },
 // });
 
 // await httpApi.start();

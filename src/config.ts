@@ -9,9 +9,9 @@ import abis from "./indexer/abis/index.js";
 import { Hex } from "./types.js";
 
 type ChainId = number;
-type CoingeckoSupportedChainId = 1 | 421614;
+type CoingeckoSupportedChainId = 1;
 
-const CHAIN_DATA_VERSION = "33";
+const CHAIN_DATA_VERSION = "1";
 
 export type Token = {
   code: string;
@@ -56,7 +56,7 @@ const CHAINS: Chain[] = [
         address: "0x0000000000000000000000000000000000000000",
         decimals: 18,
         priceSource: {
-          chainId: 421614,
+          chainId: 1,
           address: "0x0000000000000000000000000000000000000000",
         },
       },
@@ -76,7 +76,7 @@ const CHAINS: Chain[] = [
         address: "0x0000000000000000000000000000000000000000",
         decimals: 18,
         priceSource: {
-          chainId: 421614,
+          chainId: 1,
           address: "0x0000000000000000000000000000000000000000",
         },
       },
@@ -226,10 +226,9 @@ export type Config = {
   databaseUrl: string;
   databaseSchemaName: string;
   hostname: string;
-  // deploymentEnvironment: "local" | "development" | "staging" | "production";
+  deploymentEnvironment: "local" | "development" | "staging" | "production";
   // enableResourceMonitor: boolean;
   dropDb: boolean;
-  estimatesLinearQfWorkerPoolSize: number | null;
 };
 
 export function getConfig(): Config {
@@ -245,14 +244,14 @@ export function getConfig(): Config {
 
   // const apiHttpPort = z.coerce.number().parse(process.env.PORT);
 
-  // const deploymentEnvironment = z
-  //   .union([
-  //     z.literal("local"),
-  //     z.literal("development"),
-  //     z.literal("staging"),
-  //     z.literal("production"),
-  //   ])
-  //   .parse(process.env.DEPLOYMENT_ENVIRONMENT);
+  const deploymentEnvironment = z
+    .union([
+      z.literal("local"),
+      z.literal("development"),
+      z.literal("staging"),
+      z.literal("production"),
+    ])
+    .parse(process.env.DEPLOYMENT_ENVIRONMENT);
 
   const coingeckoApiKey = z
     .union([z.string(), z.null()])
@@ -356,12 +355,6 @@ export function getConfig(): Config {
 
   const dropDb = z.boolean().default(false).parse(args["drop-db"]);
 
-  const estimatesLinearQfWorkerPoolSize = z.coerce
-    .number()
-    .nullable()
-    .default(null)
-    .parse(process.env.ESTIMATES_LINEARQF_WORKER_POOL_SIZE);
-
   const httpServerWaitForSync = z
     .enum(["true", "false"])
     .default("true")
@@ -382,13 +375,12 @@ export function getConfig(): Config {
     runOnce,
     ipfsGateway,
     // apiHttpPort,
-    // deploymentEnvironment,
+    deploymentEnvironment,
     // enableResourceMonitor,
     databaseUrl,
     dropDb,
     databaseSchemaName,
     httpServerWaitForSync,
     hostname: os.hostname(),
-    estimatesLinearQfWorkerPoolSize,
   };
 }
