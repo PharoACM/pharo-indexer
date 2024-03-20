@@ -39,6 +39,50 @@ type Query implements Node {
     filter: ContractFilter
   ): [Contract!]
 
+  """Reads a set of `CoverPolicy`."""
+  coverPolicies(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `CoverPolicy`."""
+    orderBy: [CoverPoliciesOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: CoverPolicyCondition
+
+    """
+    A filter to be used in determining which values should be returned by the collection.
+    """
+    filter: CoverPolicyFilter
+  ): [CoverPolicy!]
+
+  """Reads a set of `Distribution`."""
+  distributions(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Skip the first `n` values."""
+    offset: Int
+
+    """The method to use when ordering `Distribution`."""
+    orderBy: [DistributionsOrderBy!]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: DistributionCondition
+
+    """
+    A filter to be used in determining which values should be returned by the collection.
+    """
+    filter: DistributionFilter
+  ): [Distribution!]
+
   """Reads a set of `LockToken`."""
   lockTokens(
     """Only read the first `n` values of the set."""
@@ -303,6 +347,8 @@ type Query implements Node {
     filter: WoFilter
   ): [Wo!]
   contract(id: String!): Contract
+  coverPolicy(id: String!): CoverPolicy
+  distribution(id: BigFloat!): Distribution
   lockToken(id: String!): LockToken
   pharo(id: String!): Pharo
   price(id: String!): Price
@@ -321,6 +367,22 @@ type Query implements Node {
     """The globally unique `ID` to be used in selecting a single `Contract`."""
     nodeId: ID!
   ): Contract
+
+  """Reads a single `CoverPolicy` using its globally unique `ID`."""
+  coverPolicyByNodeId(
+    """
+    The globally unique `ID` to be used in selecting a single `CoverPolicy`.
+    """
+    nodeId: ID!
+  ): CoverPolicy
+
+  """Reads a single `Distribution` using its globally unique `ID`."""
+  distributionByNodeId(
+    """
+    The globally unique `ID` to be used in selecting a single `Distribution`.
+    """
+    nodeId: ID!
+  ): Distribution
 
   """Reads a single `LockToken` using its globally unique `ID`."""
   lockTokenByNodeId(
@@ -506,6 +568,239 @@ input StringFilter {
   greaterThanOrEqualTo: String
 }
 
+type CoverPolicy implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+  id: String!
+  creationDate: BigFloat
+  blockNumber: BigFloat
+  owner: String
+  status: String
+  pharoId: BigFloat
+  coverBought: BigFloat
+  lengthOfCover: BigFloat
+  premiumPaid: BigFloat
+  premium: BigFloat
+  rateEstimate: BigFloat
+  minCover: BigFloat
+}
+
+"""
+A floating point number that requires more precision than IEEE 754 binary 64
+"""
+scalar BigFloat
+
+"""Methods to use when ordering `CoverPolicy`."""
+enum CoverPoliciesOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  CREATION_DATE_ASC
+  CREATION_DATE_DESC
+  BLOCK_NUMBER_ASC
+  BLOCK_NUMBER_DESC
+  OWNER_ASC
+  OWNER_DESC
+  STATUS_ASC
+  STATUS_DESC
+  PHARO_ID_ASC
+  PHARO_ID_DESC
+  COVER_BOUGHT_ASC
+  COVER_BOUGHT_DESC
+  LENGTH_OF_COVER_ASC
+  LENGTH_OF_COVER_DESC
+  PREMIUM_PAID_ASC
+  PREMIUM_PAID_DESC
+  PREMIUM_ASC
+  PREMIUM_DESC
+  RATE_ESTIMATE_ASC
+  RATE_ESTIMATE_DESC
+  MIN_COVER_ASC
+  MIN_COVER_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `CoverPolicy` object types. All fields are tested
+for equality and combined with a logical ‘and.’
+"""
+input CoverPolicyCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: String
+
+  """Checks for equality with the object’s `creationDate` field."""
+  creationDate: BigFloat
+
+  """Checks for equality with the object’s `blockNumber` field."""
+  blockNumber: BigFloat
+
+  """Checks for equality with the object’s `owner` field."""
+  owner: String
+
+  """Checks for equality with the object’s `status` field."""
+  status: String
+
+  """Checks for equality with the object’s `pharoId` field."""
+  pharoId: BigFloat
+
+  """Checks for equality with the object’s `coverBought` field."""
+  coverBought: BigFloat
+
+  """Checks for equality with the object’s `lengthOfCover` field."""
+  lengthOfCover: BigFloat
+
+  """Checks for equality with the object’s `premiumPaid` field."""
+  premiumPaid: BigFloat
+
+  """Checks for equality with the object’s `premium` field."""
+  premium: BigFloat
+
+  """Checks for equality with the object’s `rateEstimate` field."""
+  rateEstimate: BigFloat
+
+  """Checks for equality with the object’s `minCover` field."""
+  minCover: BigFloat
+}
+
+"""
+A filter to be used against `CoverPolicy` object types. All fields are combined with a logical ‘and.’
+"""
+input CoverPolicyFilter {
+  """Filter by the object’s `id` field."""
+  id: StringFilter
+
+  """Filter by the object’s `creationDate` field."""
+  creationDate: BigFloatFilter
+
+  """Filter by the object’s `blockNumber` field."""
+  blockNumber: BigFloatFilter
+
+  """Filter by the object’s `owner` field."""
+  owner: StringFilter
+
+  """Filter by the object’s `status` field."""
+  status: StringFilter
+
+  """Filter by the object’s `pharoId` field."""
+  pharoId: BigFloatFilter
+
+  """Filter by the object’s `coverBought` field."""
+  coverBought: BigFloatFilter
+
+  """Filter by the object’s `lengthOfCover` field."""
+  lengthOfCover: BigFloatFilter
+
+  """Filter by the object’s `premiumPaid` field."""
+  premiumPaid: BigFloatFilter
+
+  """Filter by the object’s `premium` field."""
+  premium: BigFloatFilter
+
+  """Filter by the object’s `rateEstimate` field."""
+  rateEstimate: BigFloatFilter
+
+  """Filter by the object’s `minCover` field."""
+  minCover: BigFloatFilter
+
+  """Checks for all expressions in this list."""
+  and: [CoverPolicyFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [CoverPolicyFilter!]
+
+  """Negates the expression."""
+  not: CoverPolicyFilter
+}
+
+"""
+A filter to be used against BigFloat fields. All fields are combined with a logical ‘and.’
+"""
+input BigFloatFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: BigFloat
+
+  """Not equal to the specified value."""
+  notEqualTo: BigFloat
+
+  """Included in the specified list."""
+  in: [BigFloat!]
+
+  """Not included in the specified list."""
+  notIn: [BigFloat!]
+
+  """Less than the specified value."""
+  lessThan: BigFloat
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: BigFloat
+
+  """Greater than the specified value."""
+  greaterThan: BigFloat
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: BigFloat
+}
+
+type Distribution implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+  id: BigFloat!
+  blockNumber: BigFloat
+}
+
+"""Methods to use when ordering `Distribution`."""
+enum DistributionsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  BLOCK_NUMBER_ASC
+  BLOCK_NUMBER_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `Distribution` object types. All fields are
+tested for equality and combined with a logical ‘and.’
+"""
+input DistributionCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: BigFloat
+
+  """Checks for equality with the object’s `blockNumber` field."""
+  blockNumber: BigFloat
+}
+
+"""
+A filter to be used against `Distribution` object types. All fields are combined with a logical ‘and.’
+"""
+input DistributionFilter {
+  """Filter by the object’s `id` field."""
+  id: BigFloatFilter
+
+  """Filter by the object’s `blockNumber` field."""
+  blockNumber: BigFloatFilter
+
+  """Checks for all expressions in this list."""
+  and: [DistributionFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [DistributionFilter!]
+
+  """Negates the expression."""
+  not: DistributionFilter
+}
+
 type LockToken implements Node {
   """
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
@@ -518,11 +813,6 @@ type LockToken implements Node {
   validity: BigFloat
   claimed: Boolean
 }
-
-"""
-A floating point number that requires more precision than IEEE 754 binary 64
-"""
-scalar BigFloat
 
 """Methods to use when ordering `LockToken`."""
 enum LockTokensOrderBy {
@@ -597,40 +887,6 @@ input LockTokenFilter {
 
   """Negates the expression."""
   not: LockTokenFilter
-}
-
-"""
-A filter to be used against BigFloat fields. All fields are combined with a logical ‘and.’
-"""
-input BigFloatFilter {
-  """
-  Is null (if `true` is specified) or is not null (if `false` is specified).
-  """
-  isNull: Boolean
-
-  """Equal to the specified value."""
-  equalTo: BigFloat
-
-  """Not equal to the specified value."""
-  notEqualTo: BigFloat
-
-  """Included in the specified list."""
-  in: [BigFloat!]
-
-  """Not included in the specified list."""
-  notIn: [BigFloat!]
-
-  """Less than the specified value."""
-  lessThan: BigFloat
-
-  """Less than or equal to the specified value."""
-  lessThanOrEqualTo: BigFloat
-
-  """Greater than the specified value."""
-  greaterThan: BigFloat
-
-  """Greater than or equal to the specified value."""
-  greaterThanOrEqualTo: BigFloat
 }
 
 """

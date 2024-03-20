@@ -27,6 +27,7 @@ import {
   UserRewardsTable,
   UserTable,
   WoSTable,
+  DistributionTable,
 } from "./schema.js";
 
 export type { DataChange as Changeset };
@@ -44,6 +45,7 @@ interface Tables {
   transfers: TransferTable;
   roles: RoleTable;
   pharos: PharoTable;
+  distributions: DistributionTable;
 }
 
 type KyselyDb = Kysely<Tables>;
@@ -202,6 +204,13 @@ export class Database {
         break;
 
       case "InsertDistribution":
+        await this.#db
+          .insertInto("distributions")
+          .values({
+            ...change.distribution,
+          })
+          .executeTakeFirst();
+
         break;
 
       default:
