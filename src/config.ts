@@ -9,7 +9,7 @@ import abis from "./indexer/abis/index.js";
 import { Hex } from "./types.js";
 
 type ChainId = number;
-type CoingeckoSupportedChainId = 1;
+type CoingeckoSupportedChainId = 2;
 
 const CHAIN_DATA_VERSION = "1";
 
@@ -175,7 +175,99 @@ const CHAINS: Chain[] = [
         },
       },
     ],
-    subscriptions: [],
+    subscriptions: [
+      {
+        contractName: "PharoV2/PharoToken",
+        address: "0xB4204ecc047F026ABfC3B5794cFDBF7dAC7C4C9E",
+        fromBlock: 0,
+      },
+      {
+        contractName: "PharoV2/PharoReservePool",
+        address: "0x614e27ac8c68c8c286cd66182afdb87cab31cf15",
+        fromBlock: 0,
+      },
+      {
+        contractName: "PharoV2/PharoRiskPool",
+        address: "0xe2e1f1c872842350c85623c2323914fd24a6c17c",
+        fromBlock: 0,
+      },
+      {
+        contractName: "PharoV2/PharoPhinance",
+        address: "0x65c889fe98df9358fa3d8be11d01034e32baad7a",
+        fromBlock: 0,
+      },
+      {
+        contractName: "PharoV2/PharoCover",
+        address: "0x1839DFbF2B3D2091268929a638c909B0A5bF55d2",
+        fromBlock: 0,
+      },
+      {
+        contractName: "PharoV2/PharoMarket",
+        address: "0x4833ACDd9c86E36C6C053DbF9B7e0bedf63e99c7",
+        fromBlock: 0,
+      },
+      {
+        contractName: "PharoV2/PharoRewards",
+        address: "0x19ABa69ADDcc90148FEEd97c7a4FB2e217BcF9F1",
+        fromBlock: 0,
+      },
+    ],
+  },
+  {
+    id: 2710,
+    name: "morphl2-testnet",
+    rpc: rpcUrl
+      .default("https://rpc1-testnet.morphl2.io")
+      .parse(process.env.MORPH_TESTNET),
+    pricesFromTimestamp: Date.UTC(2023, 7, 1, 0, 0, 0),
+    tokens: [
+      {
+        code: "ETH",
+        address: "0x0000000000000000000000000000000000000000",
+        decimals: 18,
+        priceSource: {
+          chainId: 1,
+          address: "0x0000000000000000000000000000000000000000",
+        },
+      },
+    ],
+    subscriptions: [
+      {
+        contractName: "PharoV2/PharoToken",
+        address: "0xB4204ecc047F026ABfC3B5794cFDBF7dAC7C4C9E",
+        fromBlock: 822900,
+      },
+      // {
+      //   contractName: "PharoV2/PharoReservePool",
+      //   address: "0xe9C7726146647cfF567078ee233C9aeE031A3260",
+      //   fromBlock: 21512000,
+      // },
+      // {
+      //   contractName: "PharoV2/PharoRiskPool",
+      //   address: "0xeb57e57dB924A052A2338E7FB9fBF8Fa40b589D3",
+      //   fromBlock: 21512000,
+      // },
+      // {
+      //   contractName: "PharoV2/PharoPhinance",
+      //   address: "0x6B914a417C2640eeca34829Bf303Af2604829A03",
+      //   fromBlock: 21512000,
+      // },
+      // {
+      //   contractName: "PharoV2/PharoCover",
+      //   address: "0x9107873027cD892eCB127D7AE978A82610F7aB86",
+      //   fromBlock: 21512000,
+      // },
+      // {
+      //   contractName: "PharoV2/PharoMarket",
+      //   address: "0x34508Cb1b4aFA25Fb6f1aCb25180A48aC2Cae0A1",
+      //   fromBlock: 21512000,
+      // },
+      // {
+      //   contractName: "PharoV2/PharoRewards",
+      //   address: "0x630ab9f5D44d2e5aca744Bfad644A4bBb426836A",
+      //   fromBlock: 21512000,
+      // },
+    ],
   },
 ];
 

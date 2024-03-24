@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import { parseAddress } from "../address.js";
 import { Changeset } from "../database/index.js";
 import { TPharoState } from "../types.js";
+import { Address } from "viem";
 
 export async function handleEvent(args: any): Promise<Changeset[]> {
   // todo: implement
@@ -116,28 +117,31 @@ export async function handleEvent(args: any): Promise<Changeset[]> {
     //       lockTokenId: 0,
     //     },
     //   ];
+    case "InsufficientFundsOrAllowance":
+      break;
 
     case "CoverPolicyInitialized":
-      console.log("CoverPolicyInitialized", args.event.params);
+      console.log("CoverPolicyInitialized", args.event);
 
       const coverPolicyInitializedParams = args.event.params as {
-        id: bigint;
-        pharoId: bigint;
-        coverAmount: bigint;
-        lengthOfCover: bigint;
+        pharo_id: bigint;
+        policy_id: bigint;
+        coverBuyer: Address;
+        timestamp: bigint;
       };
 
       return [
         {
           type: "InsertPolicy",
-          policy: {
-            id: BigInt(coverPolicyInitializedParams.id),
-            created_at: BigInt(new Date().getTime()),
+          cover_policy: {
+            id: BigInt(coverPolicyInitializedParams.policy_id),
+            // created_at: BigInt(new Date().getTime()),
             block_number: BigInt(event.blockNumber),
-            owner: parseAddress(event.transaction.from),
-            pharo_id: BigInt(coverPolicyInitializedParams.pharoId),
-            cover_bought: BigInt(coverPolicyInitializedParams.coverAmount),
-            length_of_cover: BigInt(coverPolicyInitializedParams.lengthOfCover),
+            owner: parseAddress(event.params.coverBuyer),
+            status: "ACTIVE",
+            pharo_id: BigInt(coverPolicyInitializedParams.pharo_id),
+            cover_bought: BigInt(0),
+            length_of_cover: BigInt(0),
             premium_paid: BigInt(0),
             premium: BigInt(0),
             rate_estimate: BigInt(0),

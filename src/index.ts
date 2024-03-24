@@ -16,6 +16,8 @@ import { Config, getConfig } from "./config.js";
 import { Changeset, Database } from "./database/index.js";
 import abis from "./indexer/abis/index.js";
 import { handleEvent } from "./indexer/handleEvent.js";
+import { baseSepolia } from "viem/chains";
+
 const { Pool } = pg.default;
 
 // const { Pool, types } = pg.default;
@@ -67,9 +69,9 @@ async function main(): Promise<void> {
   const indexer = createIndexer({
     contracts: abis as Record<string, Abi>,
     chain: {
-      id: 421614,
+      id: baseSepolia.id,
       rpcClient: createHttpRpcClient({
-        url: process.env.ARBITRUM_SEPOLIA_RPC_URL as string,
+        url: process.env.BASE_SEPOLIA_RPC_URL as string,
       }),
     },
     logLevel: "trace",

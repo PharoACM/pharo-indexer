@@ -36,7 +36,7 @@ interface Tables {
   users: UserTable;
   prices: PriceTable;
   obelisks: ObeliskTable;
-  policies: PolicyTable;
+  cover_policies: PolicyTable;
   liquidityProducts: LiquidityProductTable;
   signedPolicies: SignedPolicyTable;
   signedPositions: SignedPositionTable;
@@ -161,6 +161,7 @@ export class Database {
   }
 
   async applyChange(change: any): Promise<void> {
+    console.log("applyChange", change);
     switch (change.type) {
       case "InsertTransfer":
         await this.#db
@@ -191,9 +192,9 @@ export class Database {
 
       case "InsertPolicy":
         await this.#db
-          .insertInto("policies")
+          .insertInto("cover_policies")
           .values({
-            ...change.policy,
+            ...change.cover_policy,
           })
           .executeTakeFirst();
 

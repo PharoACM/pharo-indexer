@@ -48,6 +48,7 @@ export default [
     type: "function",
     name: "createCoverPolicy",
     inputs: [
+      { name: "userAddress", type: "address", internalType: "address" },
       { name: "token", type: "address", internalType: "address" },
       { name: "pharoId", type: "uint256", internalType: "uint256" },
       {
@@ -505,6 +506,37 @@ export default [
   },
   {
     type: "event",
+    name: "CoverPolicyUpdated",
+    inputs: [
+      {
+        name: "pharoId",
+        type: "uint256",
+        indexed: false,
+        internalType: "uint256",
+      },
+      {
+        name: "policyId",
+        type: "uint256",
+        indexed: false,
+        internalType: "uint256",
+      },
+      {
+        name: "reward",
+        type: "uint256",
+        indexed: false,
+        internalType: "uint256",
+      },
+      {
+        name: "coverBought",
+        type: "uint256",
+        indexed: false,
+        internalType: "uint256",
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
     name: "ExecuteCBFinancialsError",
     inputs: [
       {
@@ -656,6 +688,9 @@ export default [
     ],
     anonymous: false,
   },
+  { type: "error", name: "ALLOWANCE_TOO_LOW", inputs: [] },
+  { type: "error", name: "ALREADY_LOCKED", inputs: [] },
+  { type: "error", name: "AMOUNT_ZERO", inputs: [] },
   { type: "error", name: "AccessControlBadConfirmation", inputs: [] },
   {
     type: "error",
@@ -665,6 +700,15 @@ export default [
       { name: "neededRole", type: "bytes32", internalType: "bytes32" },
     ],
   },
+  { type: "error", name: "CAP_REACHED", inputs: [] },
+  { type: "error", name: "INSUFFICIENT_BALANCE", inputs: [] },
   { type: "error", name: "MustBeGreaterThanZero", inputs: [] },
+  { type: "error", name: "NOT_ALLOWED", inputs: [] },
+  { type: "error", name: "NOT_ENOUGH_BALANCE", inputs: [] },
+  { type: "error", name: "NOT_LOCKED", inputs: [] },
+  { type: "error", name: "NO_APPROVAL", inputs: [] },
+  { type: "error", name: "PAST_DEADLINE", inputs: [] },
+  { type: "error", name: "WRONG_ROLE", inputs: [] },
   { type: "error", name: "WrongRole", inputs: [] },
-];
+  { type: "error", name: "ZERO_ADDRESS", inputs: [] },
+] as const;
