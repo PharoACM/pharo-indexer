@@ -9,7 +9,7 @@ import abis from "./indexer/abis/index.js";
 import { Hex } from "./types.js";
 
 type ChainId = number;
-type CoingeckoSupportedChainId = 2;
+type CoingeckoSupportedChainId = 1;
 
 const CHAIN_DATA_VERSION = "1";
 

@@ -69,6 +69,7 @@ export async function fetchPricesForRange({
     async () => {
       const res = await fetch(`${coingeckoApiUrl}${path}`, {
         headers,
+        timeout: 4000,
       });
 
       const body = (await res.json()) as
